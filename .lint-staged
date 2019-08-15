@@ -1,0 +1,5 @@
+{
+    "fileExtensions": ["swift"],
+    "commands": ["cat"],
+    "stagedOnly": true
+}

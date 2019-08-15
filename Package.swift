@@ -9,14 +9,16 @@ let package = Package(
         .executable(name: "lint-staged", targets: ["LintStaged"])
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/kylef/PathKit.git", from: "1.0.0"),
+        .package(url: "https://github.com/jakeheis/SwiftCLI.git", from: "5.0.0"),
     ],
     targets: [
         .target(
             name: "LintStaged",
             dependencies: ["LintStagedCore"]),
-        .target(name: "LintStagedCore"),
+        .target(
+            name: "LintStagedCore",
+            dependencies: ["PathKit", "SwiftCLI"]),
         .testTarget(
             name: "LintStagedTests",
             dependencies: ["LintStaged"]),
