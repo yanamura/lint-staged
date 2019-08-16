@@ -44,23 +44,25 @@ public final class LintStaged {
     }
 
     public func run() throws {
-        let config = try getConfig()
-        let files = try getChanged(stagedOnly: config.stagedOnly ?? false)
-        files
-            .filter { filename in
-                !config.fileExtensions
-                    .filter { filename.hasSuffix("\($0)")}
-                    .isEmpty
-            }
-            .forEach { filename in
-                config.commands.forEach { command in
-                    let result = try! Task.capture(bash: "\(command) \(filename)")
-                    print(result.stdout)
+        let configs = try getConfig()
+        try configs.forEach { config in
+            let files = try getChanged(stagedOnly: config.stagedOnly ?? false)
+            files
+                .filter { filename in
+                    !config.fileExtensions
+                        .filter { filename.hasSuffix("\($0)")}
+                        .isEmpty
                 }
-            }
+                .forEach { filename in
+                    config.commands.forEach { command in
+                        let result = try! Task.capture(bash: "\(command) \(filename)")
+                        print(result.stdout)
+                    }
+                }
+        }
     }
 
-    private func getConfig() throws -> Config {
+    private func getConfig() throws -> [Config] {
         if configPath.exists {
             let configData: Data
             do {
@@ -70,7 +72,7 @@ public final class LintStaged {
             }
 
             do {
-                return try JSONDecoder().decode(Config.self, from: configData)
+                return try JSONDecoder().decode([Config].self, from: configData)
             } catch {
                 throw LintStagedError.invalidConfigData
             }

@@ -1,5 +1,7 @@
-{
-    "fileExtensions": ["swift"],
-    "commands": ["cat"],
-    "stagedOnly": true
-}
+[
+    {
+        "fileExtensions": ["swift"],
+        "commands": ["cat"],
+        "stagedOnly": true
+    }
+]
