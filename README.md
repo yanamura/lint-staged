@@ -10,6 +10,7 @@ create `.lint-staged` on project root directory.
 
 #### .lint-staged
 
+```
 [
     {
         "fileExtensions": ["swift"],
@@ -17,3 +18,16 @@ create `.lint-staged` on project root directory.
         "stagedOnly": true
     }
 ]
+```
+
+### Run
+
+```
+swift run -c release lint-staged
+```
+
+#### Mint
+
+```
+mint run yanamura/lint-staged lint-staged
+```
